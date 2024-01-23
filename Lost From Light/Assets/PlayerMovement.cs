@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -68,6 +69,11 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             state = MovementState.idle;
+        }
+
+        if (rb.velocity.y  > 0f)
+        {
+            state = MovementState.jumping;
         }
 
         if (Input.GetMouseButtonUp(0))
