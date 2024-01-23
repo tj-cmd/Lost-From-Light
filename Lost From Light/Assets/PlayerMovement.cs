@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.idle;
         }
 
-        if (rb.velocity.y  > 0f)
+        if (rb.velocity.y  > .1f)
         {
             state = MovementState.jumping;
         }
