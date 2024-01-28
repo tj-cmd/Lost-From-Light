@@ -16,7 +16,11 @@ public class PlayerMovement : MonoBehaviour
     private enum MovementState { idle, running, jumping }
     
     private SpriteRenderer sprite;
-
+    //player attack variables
+    public GameObject attackPoint;
+    public float radius;
+    public LayerMask enemies;
+    public float damage = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -75,25 +79,51 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.jumping;
         }
-
-        if (Input.GetMouseButtonUp(0))
+        //attacking
+        if (Input.GetMouseButtonDown(0))
         {
-            anim.SetBool("attack", Input.GetMouseButtonUp(0));
+            anim.SetBool("attack", true);
+            
+            
         }
         
+        if(dirX > .1f || dirX < -.1f)
+        {
+            anim.SetBool("isRunning", true);
+        }
+        else
+        {
+            anim.SetBool("isRunning", false);
+        }
+
+
         
-            anim.SetBool("attack", false);
-        
-        
-        
-            
-        
+
+
+
 
 
         anim.SetInteger("state", (int)state);
         
     }
 
+    public void attack()
+    {
+        
+    Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, radius, enemies);
+        foreach (Collider2D enemyGameobject in enemy)
+        {
+            Debug.Log("Hit enemy");
+            enemyGameobject.GetComponent<Monster_Health>().health -= damage;
+        }
+    }
+
+    public void endAttack()
+    {
+        anim.SetBool("attack", false);
+    }
+
+    
 
 }
 
