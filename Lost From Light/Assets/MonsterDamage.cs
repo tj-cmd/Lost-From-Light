@@ -20,20 +20,11 @@ public class MonsterDamage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        ani = GetComponent<Animator>();
     }
     //update called once per frame
     void Update()
     {
-        /*dirX = Input.GetAxisRaw("Horizontal");
-        if(dirX > .1f || dirX < -.1f)
-        {
-            ani.SetBool("Run", true);
-        }
-        else
-        {
-            ani.SetBool("Run", false);
-        }*/
 
         //distance between monster and player
         distance = Vector2.Distance(transform.position, player.transform.position);
@@ -49,6 +40,10 @@ public class MonsterDamage : MonoBehaviour
         {
             Vector2 direction = player.transform.position - transform.position;
             transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, Speed * Time.deltaTime);
+            ani.SetBool("Run", true);
+        }else
+        {
+            ani.SetBool("Run", false);
         }
     }
     //Player Takes damage on collision
@@ -57,7 +52,7 @@ public class MonsterDamage : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            //playerHealth.TakeDamage(damage);
+            playerHealth.TakeDamage(damage);
         }
     }
 
