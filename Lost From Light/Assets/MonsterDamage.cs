@@ -6,13 +6,60 @@ public class MonsterDamage : MonoBehaviour
 {
     public int damage;
     public PlayerHealth playerHealth;
-    // Start is called before the first frame update
 
+    public GameObject player;
+    public float Speed;
+
+    private float distance;
+    public GameObject monsterAttackPoint;
+    public float mRadius;
+    public LayerMask player_Layer;
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+    //update called once per frame
+    void Update()
+    {
+        //distance between monster and player
+        distance = Vector2.Distance(transform.position, player.transform.position);
+        if (distance < 2)
+        {
+            Attack();
+        }
+
+
+
+        //AI for Monster Chase
+        if (distance < 4 && distance > 1)
+        {
+            Vector2 direction = player.transform.position - transform.position;
+            transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, Speed * Time.deltaTime);
+        }
+    }
+    //Player Takes damage on collision
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+
+        if (collision.gameObject.tag == "Player")
         {
-            playerHealth.TakeDamage(damage);
+            //playerHealth.TakeDamage(damage);
         }
+    }
+
+    private void Attack()
+    {
+        Collider2D[] playerCollider = Physics2D.OverlapCircleAll(monsterAttackPoint.transform.position, mRadius, player_Layer);
+        foreach (Collider2D enemyGameObject in playerCollider)
+        {
+            Debug.Log("Hit Player");
+            //playerHealth.TakeDamage(damage);
+        }
+        
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(monsterAttackPoint.transform.position, mRadius);
     }
 }
