@@ -14,6 +14,9 @@ public class MonsterDamage : MonoBehaviour
     public GameObject monsterAttackPoint;
     public float mRadius;
     public LayerMask player_Layer;
+
+    private float dirX;
+    private Animator ani;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +25,16 @@ public class MonsterDamage : MonoBehaviour
     //update called once per frame
     void Update()
     {
+        /*dirX = Input.GetAxisRaw("Horizontal");
+        if(dirX > .1f || dirX < -.1f)
+        {
+            ani.SetBool("Run", true);
+        }
+        else
+        {
+            ani.SetBool("Run", false);
+        }*/
+
         //distance between monster and player
         distance = Vector2.Distance(transform.position, player.transform.position);
         if (distance < 2)
