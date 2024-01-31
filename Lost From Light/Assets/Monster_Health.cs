@@ -25,7 +25,8 @@ public class Monster_Health : MonoBehaviour
         }
         if (health <= 0)
         {
-            Destroy(gameObject);
+            ani.SetBool("mdead", true);
         }
+
     }
 }

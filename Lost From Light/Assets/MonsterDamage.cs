@@ -75,4 +75,8 @@ public class MonsterDamage : MonoBehaviour
     {
         ani.SetBool("mAttack", false);
     }
+    private void monsterDead()
+    {
+        Destroy(gameObject);
+    }
 }
