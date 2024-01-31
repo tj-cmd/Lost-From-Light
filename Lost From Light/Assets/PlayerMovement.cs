@@ -21,13 +21,15 @@ public class PlayerMovement : MonoBehaviour
     public float radius;
     public LayerMask enemies;
     public float damage = 10;
-
     private bool canDash = true;
     private bool isDashing;
     private float dashingPower = 24f;
     private float dashTime = 0.2f;
     private float dashCool = 1f;
     [SerializeField] private TrailRenderer tr;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,10 +52,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (isDashing)
+        if(isDashing)
         {
             return;
         }
+
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2 (dirX * playerSpeed, rb.velocity.y);
 
@@ -106,12 +109,15 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool("isRunning", false);
         }
+
+
         anim.SetInteger("state", (int)state);
 
-        if (Input.GetKeyDown(KeyCode.E) && canDash)
+        if( Input.GetKeyDown(KeyCode.E) && canDash)
         {
             StartCoroutine(Dash());
         }
+        
     }
 
     public void attack()
@@ -144,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashCool);
         canDash = true;
     }
+    
 
 }
 
