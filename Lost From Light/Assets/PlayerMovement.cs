@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        
         if(isDashing)
         {
             return;
@@ -113,11 +114,18 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetInteger("state", (int)state);
 
-        if( Input.GetKeyDown(KeyCode.E) && canDash)
+        if (Input.GetKeyDown(KeyCode.E) && canDash && sprite.flipX == false)
         {
-            StartCoroutine(Dash());
+            StartCoroutine(Dash(dashingPower));
         }
         
+        if (Input.GetKeyDown(KeyCode.E) && canDash && sprite.flipX == true) 
+        {
+            StartCoroutine(Dash(-dashingPower));
+        }
+        
+
+
     }
 
     public void attack()
@@ -136,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("attack", false);
     }
 
-    private IEnumerator Dash()
+    private IEnumerator Dash(float dashingPower)
     {
         canDash = false;
         isDashing = true;
@@ -150,7 +158,6 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashCool);
         canDash = true;
     }
-    
 
 }
 
