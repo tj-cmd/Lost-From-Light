@@ -28,9 +28,9 @@ public class MonsterDamage : MonoBehaviour
 
         //distance between monster and player
         distance = Vector2.Distance(transform.position, player.transform.position);
-        if (distance < 2)
+        if(distance < 2)
         {
-            Attack();
+            ani.SetBool("mAttack", true);
         }
 
 
@@ -61,13 +61,18 @@ public class MonsterDamage : MonoBehaviour
         Collider2D[] playerCollider = Physics2D.OverlapCircleAll(monsterAttackPoint.transform.position, mRadius, player_Layer);
         foreach (Collider2D enemyGameObject in playerCollider)
         {
-            Debug.Log("Hit Player");
-            //playerHealth.TakeDamage(damage);
+            
+            playerHealth.TakeDamage(damage);
         }
         
     }
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(monsterAttackPoint.transform.position, mRadius);
+    }
+
+    private void endAttack()
+    {
+        ani.SetBool("mAttack", false);
     }
 }
