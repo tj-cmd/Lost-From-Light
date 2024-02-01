@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private TrailRenderer tr;
 
 
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -123,8 +123,8 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(Dash(-dashingPower));
         }
-        
 
+        
 
     }
 
