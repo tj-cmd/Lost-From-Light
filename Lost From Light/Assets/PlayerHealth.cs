@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     private Rigidbody2D rb;
     public float currenthealth;
     private Animator anim;
+    Vector2 startPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,7 @@ public class PlayerHealth : MonoBehaviour
         health = maxHealth;
         currenthealth = health;
         rb = GetComponent<Rigidbody2D>();
+        startPos = transform.position;
     }
     public void TakeDamage(int damage)
     {
@@ -24,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
         rb.velocity = (new Vector2(rb.velocity.x, 2));
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Respawn();
         }
         if (health < currenthealth)
         {
@@ -32,10 +34,16 @@ public class PlayerHealth : MonoBehaviour
             anim.SetTrigger("hurt");
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    void Respawn()
     {
-        
+        transform.position = startPos;
+        health = maxHealth;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Respawn"))
+        {
+            Respawn();
+        }
     }
 }
